@@ -87,7 +87,7 @@ public class Createbook {
 
                 saveBookDetails(bookNumber, bookTitle, bookAuthor);
                 clearFields();
-                JOptionPane.showMessageDialog(frame, "Book created successfully!");
+                
             }
         });
 
@@ -130,19 +130,25 @@ public class Createbook {
     }
 
     private void saveBookDetails(String bookNumber, String bookTitle, String bookAuthor) {
+      
+        if (!bookNumber.matches("\\d+")) {
+            JOptionPane.showMessageDialog(frame, "Book number must contain only numbers.");
+            return;
+        }
+    
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKS_FILE, true))) {
-          
+    
             writer.write(bookNumber + "," + bookTitle + "," + bookAuthor + ",available");
             writer.newLine();
-            
-      
+    
             Book newBook = new Book(bookTitle, bookAuthor, bookNumber);
             books.add(newBook);
-            
+             JOptionPane.showMessageDialog(frame, "Book created successfully!");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(frame, "Error saving book details: " + e.getMessage());
         }
     }
+    
 
     public static List<Book> getAllBooks() {
         if (books.isEmpty()) {
