@@ -3,8 +3,6 @@ BOOKS BUG:
 - When display all books clicked, nauulit yung mga books sa create
 
 CREATE BOOKS 
-
-- BOOK ID MUST BE INT ONLY. (with validation)
 - THE LIST MUST AUTOMATICALLY REFRESH
 
 UPDATE BOOKS
