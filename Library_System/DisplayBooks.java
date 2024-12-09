@@ -1,6 +1,12 @@
-import javax.swing.*;
 import java.awt.*;
-import java.io.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class DisplayBooks {
     private JFrame frame;
@@ -9,32 +15,72 @@ public class DisplayBooks {
         frame = new JFrame("All Books");
         frame.setIconImage(new ImageIcon("White and Blue Illustrative Class Logo-modified.png").getImage());
 
-        JTextArea textArea = new JTextArea(20, 50);
-        textArea.setEditable(false); // make the text area non-editable
-        textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
+        JPanel contentPanel = new JPanel();
+        contentPanel.setBackground(new Color(0xFFF0D1));
+        contentPanel.setLayout(new BorderLayout());
+        contentPanel.setBorder(BorderFactory.createTitledBorder("Book List"));
+        frame.setContentPane(contentPanel);
 
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        frame.add(scrollPane, BorderLayout.CENTER);
+        JLabel titleLabel = new JLabel("All Available Books", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        contentPanel.add(titleLabel, BorderLayout.NORTH);
+
+        DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"Book ID", "Book Title", "Book Authors"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        JTable bookTable = new JTable(tableModel);
+        bookTable.setFillsViewportHeight(true);
+        bookTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        bookTable.setBackground(new Color(0xFFF0D1));
+        bookTable.setRowHeight(30);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        bookTable.setDefaultRenderer(Object.class, centerRenderer);
+
+        bookTable.getTableHeader().setBackground(new Color(0x603F26));
+        bookTable.getTableHeader().setForeground(Color.WHITE);
+        bookTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
+
+        JScrollPane scrollPane = new JScrollPane(bookTable);
+        contentPanel.add(scrollPane, BorderLayout.CENTER);
 
         JButton backButton = new JButton("Back");
-        backButton.setFont(new Font("SansSerif", Font.BOLD, 18));
+        backButton.setFont(new Font("SansSerif", Font.BOLD, 16));
         backButton.setBackground(new Color(0x603F26));
         backButton.setForeground(Color.WHITE);
-        backButton.setPreferredSize(new Dimension(100, 40));
-        backButton.setMaximumSize(new Dimension(100, 40));
-        backButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        backButton.setPreferredSize(new Dimension(120, 40));
+        backButton.setMaximumSize(new Dimension(120, 40));
+        backButton.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
         backButton.setFocusPainted(false);
+
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backButton.setBackground(new Color(0x7A4B3A));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backButton.setBackground(new Color(0x603F26));
+            }
+        });
 
         backButton.addActionListener(e -> {
             frame.dispose();
-            parentFrame.setVisible(true); // Show the parent frame when back is clicked
+            parentFrame.setVisible(true);
         });
 
-        JPanel bottomPanel = new JPanel();
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.setBackground(new Color(0xFFF0D1));
         bottomPanel.add(backButton);
-        frame.add(bottomPanel, BorderLayout.SOUTH);
+        contentPanel.add(bottomPanel, BorderLayout.SOUTH);
 
-        loadBookDetails(textArea);
+        loadBookDetails(tableModel);
 
         frame.setSize(600, 500);
         frame.setLocationRelativeTo(parentFrame);
@@ -42,13 +88,14 @@ public class DisplayBooks {
         frame.setVisible(true);
     }
 
-    private void loadBookDetails(JTextArea textArea) {
+    private void loadBookDetails(DefaultTableModel tableModel) {
         try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",");
-                String bookInfo = String.format("Book Number: %s | Title: %s | Author: %s\n", details[0], details[1], details[2]);
-                textArea.append(bookInfo);
+                if (details.length >= 3) {
+                    tableModel.addRow(new Object[]{details[0], details[1], details[2]});
+                }
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(frame, "Error reading file: " + e.getMessage());

@@ -145,4 +145,34 @@ public class BorrowBooks extends JFrame {
 
         JOptionPane.showMessageDialog(this, "Book borrowed successfully!");
     }
+
+    private void updateBookStatusInFile(String isbn, String status, String borrowerId) {
+        // Read all books
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] details = line.split(",");
+                if (details[0].equals(isbn)) {
+                    // Update status and borrower ID
+                    details[3] = status; // status
+                    details[4] = borrowerId; // borrower ID
+                    line = String.join(",", details);
+                }
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Write back to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("books.txt"))) {
+            for (String l : lines) {
+                writer.write(l);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 } 

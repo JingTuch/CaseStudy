@@ -1,8 +1,20 @@
-1,ulala,nigga,borrowed
-2,The tale of Kenji sindikato,Kenji Chua,available
-3,Tula ni Ginoong Torpe,Gillan lorenzo,borrowed
-12,21,kenji masarap,available
-101,gillian masarap101,miss u na,available
-2121,pagod nako,...,available
-122,miss u na,auq na,available
-312,finally,fixed na,available
+1,Ulala,Author One,available
+2,The Tale of Kenji Sindikato,Kenji Chua,available,
+3,Tula ni Ginoong Torpe,Gillan Lorenzo,available
+4,The Great Gatsby,F. Scott Fitzgerald,available,
+5,1984,George Orwell,available,
+6,To Kill a Mockingbird,Harper Lee,borrowed,456
+7,Pride and Prejudice,Jane Austen,available,
+8,Moby Dick,Herman Melville,available
+9,War and Peace,Leo Tolstoy,borrowed,789
+10,The Catcher in the Rye,J.D. Salinger,available,
+11,The Hobbit,J.R.R. Tolkien,available,
+12,The Alchemist,Paulo Coelho,borrowed,101
+13,The Picture of Dorian Gray,Oscar Wilde,available,
+14,Brave New World,Aldous Huxley,available,
+15,The Chronicles of Narnia,C.S. Lewis,borrowed,202
+16,The Fault in Our Stars,John Green,available,
+17,The Kite Runner,Khaled Hosseini,available,
+18,The Book Thief,Markus Zusak,available,
+19,The Catcher in the Rye,J.D. Salinger,available,
+20,The Great Gatsby,F. Scott Fitzgerald,available,
