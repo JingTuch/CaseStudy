@@ -1,9 +1,10 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class Createbook {
     private JFrame frame;
@@ -11,6 +12,7 @@ public class Createbook {
     private static List<Book> books = new ArrayList<>();
     private static final String BOOKS_FILE = "books.txt";
     private DefaultListModel<Book> bookListModel;
+    private JTable bookTable;
 
     public Createbook(JFrame parentFrame, JFrame adminFrame) {
         frame = new JFrame("Create Book");
@@ -28,7 +30,9 @@ public class Createbook {
         };
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-       
+        // Set an empty border on the main panel to create margins
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         JLabel headerLabel = new JLabel("Create New Book");
         headerLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
         headerLabel.setForeground(new Color(0x3B3030));
@@ -97,12 +101,27 @@ public class Createbook {
      
         bookListModel = new DefaultListModel<>();
         updateBookList();
-        JList<Book> bookList = new JList<>(bookListModel);
-        JScrollPane scrollPane = new JScrollPane(bookList);
-        scrollPane.setPreferredSize(new Dimension(400, 200));
-        scrollPane.setMaximumSize(new Dimension(400, 200));
-        panel.add(new JLabel("Existing Books:"));
-        panel.add(scrollPane);
+        bookTable = new JTable();
+        setupBookTable(bookTable);
+
+        // Create a panel for the label to center it
+        JPanel labelPanel = new JPanel();
+        labelPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Center the label
+        labelPanel.setOpaque(false); // Make the panel transparent to show the background
+        JLabel existingBooksLabel = new JLabel("Existing Books:");
+        existingBooksLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); // Set a bold font for the label
+        existingBooksLabel.setForeground(new Color(0x3B3030)); // Set the text color
+        labelPanel.add(existingBooksLabel); // Add the label to the panel
+
+        // Update the JScrollPane size to match the gray background area without margins
+        JScrollPane scrollPane = new JScrollPane(bookTable);
+        scrollPane.setPreferredSize(new Dimension(580, 400)); // Set preferred size to match the panel size
+        scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE)); // Allow it to expand
+        scrollPane.setBorder(null); // Remove margins around the scroll pane
+
+        // Add the label panel and scroll pane to the main panel
+        panel.add(labelPanel); // Add the centered label panel
+        panel.add(scrollPane); // Add the scroll pane
         panel.add(Box.createVerticalStrut(20));
 
 
@@ -130,20 +149,20 @@ public class Createbook {
     }
 
     private void saveBookDetails(String bookNumber, String bookTitle, String bookAuthor) {
-      
         if (!bookNumber.matches("\\d+")) {
             JOptionPane.showMessageDialog(frame, "Book number must contain only numbers.");
             return;
         }
-    
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKS_FILE, true))) {
-    
             writer.write(bookNumber + "," + bookTitle + "," + bookAuthor + ",available");
             writer.newLine();
-    
+
             Book newBook = new Book(bookTitle, bookAuthor, bookNumber);
             books.add(newBook);
-             JOptionPane.showMessageDialog(frame, "Book created successfully!");
+            JOptionPane.showMessageDialog(frame, "Book created successfully!");
+
+            updateBookTable();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(frame, "Error saving book details: " + e.getMessage());
         }
@@ -230,6 +249,30 @@ public class Createbook {
         bookListModel.clear();
         for (Book book : books) {
             bookListModel.addElement(book);
+        }
+    }
+
+    private void setupBookTable(JTable bookTable) {
+        bookTable.setModel(new DefaultTableModel(new Object[]{"Title", "Author", "Book ID", "Status"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        });
+
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        for (Book book : books) {
+            String status = book.isAvailable() ? "Available" : "Borrowed";
+            model.addRow(new Object[]{book.getTitle(), book.getAuthor(), book.getIsbn(), status});
+        }
+    }
+
+    private void updateBookTable() {
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        model.setRowCount(0);
+        for (Book book : books) {
+            String status = book.isAvailable() ? "Available" : "Borrowed";
+            model.addRow(new Object[]{book.getTitle(), book.getAuthor(), book.getIsbn(), status});
         }
     }
 }
