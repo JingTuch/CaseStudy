@@ -135,6 +135,7 @@ public class Createbook {
         backButton.addActionListener(e -> {
             frame.dispose();
             adminFrame.setVisible(true);
+            updateBookList();
         });
 
         panel.add(backButton);

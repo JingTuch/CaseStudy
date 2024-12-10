@@ -2,7 +2,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.List;
 import javax.swing.*;
-
+import java.util.ArrayList;
 public class BorrowBooks extends JFrame {
     private JFrame parentFrame;
     private DefaultListModel<Book> bookListModel;
@@ -148,7 +148,7 @@ public class BorrowBooks extends JFrame {
 
     private void updateBookStatusInFile(String isbn, String status, String borrowerId) {
         // Read all books
-        List<String> lines = new ArrayList<>();
+        List<String> lines = new ArrayList<String>();
         try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {

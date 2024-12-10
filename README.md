@@ -1,6 +1,6 @@
 BOOKS BUG:
 
-- When display all books clicked, nauulit yung mga books sa create
+- None so Far
 
 CREATE BOOKS 
 - THE LIST MUST AUTOMATICALLY REFRESH
