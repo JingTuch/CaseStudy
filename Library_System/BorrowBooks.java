@@ -52,7 +52,7 @@ public class BorrowBooks extends JFrame {
         backgroundPanel.add(titlePanel, BorderLayout.NORTH);
 
         // Table Model and JTable
-        String[] columnNames = {"Boadawdok ID", "Title", "Author"};
+        String[] columnNames = {"Book ID", "Title", "Author"};
         tableModel = new DefaultTableModel(columnNames, 0);
         loadAvailableBooks();
 
