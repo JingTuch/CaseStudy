@@ -192,11 +192,13 @@ public class JSwing extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
               mainmenuFrame.dispose(); 
-              HowtoUse how = new HowtoUse();
+              HowtoUse how = new HowtoUse(mainmenuFrame);
               how.setVisible(true);
               
             }
         });
+    
+    
     
     }
 

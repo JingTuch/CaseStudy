@@ -11,6 +11,9 @@
 20240017,Introduction to Database Systems,1,2024-12-10,Returned
 20240018,Deep Learning,1,2024-12-10,Returned
 20240022,Modern Operating Systems,1,2024-12-10,Returned
-20240007,Computer Organization and Design,1,2024-12-10,Borrowed,David A. Patterson
+20240007,Computer Organization and Design,1,2024-12-10,Returned
 20240015,Database System Concepts,1,2024-12-10,Borrowed,Abraham Silberschatz
-20240016,Algorithms,1,2024-12-10,Borrowed,Robert Sedgewick
+20240016,Algorithms,1,2024-12-10,Returned
+20240016,Algorithms,1,2024-12-11,Returned
+20240001,Introduction to Algorithms,1,2024-12-11,Borrowed,Thomas H. Cormen
+20240002,The Art of Computer Programming,1,2024-12-11,Borrowed,Donald E. Knuth

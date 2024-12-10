@@ -1,10 +1,10 @@
-20240001,Introduction to Algorithms,Thomas H. Cormen,available
-20240002,The Art of Computer Programming,Donald E. Knuth,available
+20240001,Introduction to Algorithms,Thomas H. Cormen,borrowed
+20240002,The Art of Computer Programming,Donald E. Knuth,borrowed
 20240003,Computer Networking: A Top-Down Approach,James F. Kurose,available
 20240004,Design Patterns: Elements of Reusable Object-Oriented Software,Erich Gamma,available
 20240005,Clean Code: A Handbook of Agile Software Craftsmanship,Robert C. Martin,available
 20240006,Artificial Intelligence: A Modern Approach,Stuart Russell,available
-20240007,Computer Organization and Design,David A. Patterson,borrowed
+20240007,Computer Organization and Design,David A. Patterson,available
 20240008,Introduction to the Theory of Computation,Michael Sipser,available
 20240009,Structure and Interpretation of Computer Programs,Harold Abelson,available
 20240010,Operating System Concepts,Abraham Silberschatz,available
@@ -13,7 +13,7 @@
 20240013,The Pragmatic Programmer,Andrew Hunt,available
 20240014,Code: The Hidden Language of Computer Hardware and Software,Charles Petzold,available
 20240015,Database System Concepts,Abraham Silberschatz,borrowed
-20240016,Algorithms,Robert Sedgewick,borrowed
+20240016,Algorithms,Robert Sedgewick,available
 20240017,Introduction to Database Systems,C.J. Date,available
 20240018,Deep Learning,Ian Goodfellow,available
 20240019,Compilers: Principles, Techniques,available
