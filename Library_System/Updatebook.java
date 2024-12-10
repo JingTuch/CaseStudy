@@ -191,7 +191,8 @@ public class Updatebook {
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",", 4); // Adjusted to split into 4 parts
                 if (details[0].equals(bookNumber)) {
-                    writer.write(bookNumber + "," + bookTitle + "," + bookAuthor + "," + details[3]); // Include status
+                    String status = details[3].trim(); // Get the current status
+                    writer.write(bookNumber + "," + bookTitle + "," + bookAuthor + "," + status); // Include status
                     updated = true;
                 } else {
                     writer.write(line);
@@ -225,7 +226,9 @@ public class Updatebook {
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",", 4); // Adjusted to split into 4 parts
                 if (details.length >= 4) { // Ensure there are enough details
-                    tableModel.addRow(new Object[]{details[0], details[1], details[2], details[3]}); // Include status
+                    String status = details[3].trim(); // Get the status
+                    String displayStatus = status.equalsIgnoreCase("available") ? "Available" : "Borrowed"; // Normalize status
+                    tableModel.addRow(new Object[]{details[0], details[1], details[2], displayStatus}); // Include normalized status
                 }
             }
         } catch (IOException e) {

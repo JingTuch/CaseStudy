@@ -3,11 +3,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class ReturnBooks extends JFrame {
     private JFrame parentFrame;
-    private DefaultListModel<Book> borrowedBooksModel;
-    private JList<Book> borrowedBooksList;
     private String studentId;
     private static final String BORROWING_FILE = "borrowing_records.txt";
 
@@ -27,100 +26,92 @@ public class ReturnBooks extends JFrame {
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             }
         };
-        backgroundPanel.setLayout(new BoxLayout(backgroundPanel, BoxLayout.Y_AXIS));
+        backgroundPanel.setLayout(new BorderLayout());
+        backgroundPanel.setPreferredSize(new Dimension(800, 650));
 
         // Logo
-        backgroundPanel.add(Box.createVerticalStrut(10));
-        ImageIcon frontbg = new ImageIcon("White and Blue Illustrative Class Logo-modified.png");
-        JLabel imageLabel = new JLabel(frontbg);
-        Image img = frontbg.getImage();
-        Image newImg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
-        frontbg = new ImageIcon(newImg);
-        imageLabel.setIcon(frontbg);
-        imageLabel.setAlignmentX(CENTER_ALIGNMENT);
-        backgroundPanel.add(imageLabel);
+        JLabel logoLabel = new JLabel(new ImageIcon("logo.png")); // Ensure "logo.png" is the correct path
+        logoLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         // Header
-        backgroundPanel.add(Box.createVerticalStrut(20));
         JLabel titleLabel = new JLabel("RETURN BOOKS");
         titleLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
         titleLabel.setForeground(new Color(0x3B3030));
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-        backgroundPanel.add(titleLabel);
 
-        // Add more space after the title
-        backgroundPanel.add(Box.createVerticalStrut(0));
+        // Title panel
+        JPanel titlePanel = new JPanel();
+        titlePanel.setOpaque(false);
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
+        titlePanel.add(logoLabel);
+        titlePanel.add(Box.createVerticalStrut(10));
+        titlePanel.add(titleLabel);
+        backgroundPanel.add(titlePanel, BorderLayout.NORTH);
 
-        // Borrowed books list
-        borrowedBooksModel = new DefaultListModel<>();
-        loadBorrowedBooks();
-        borrowedBooksList = new JList<>(borrowedBooksModel);
-        borrowedBooksList.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        JScrollPane scrollPane = new JScrollPane(borrowedBooksList);
-        scrollPane.setPreferredSize(new Dimension(400, 300));
-        scrollPane.setMaximumSize(new Dimension(400, 300));
-        backgroundPanel.add(Box.createVerticalStrut(20));
-        backgroundPanel.add(scrollPane);
+        // Borrowed books table
+        String[] columnNames = {"ISBN", "Title", "Author"};
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        loadBorrowedBooks(tableModel);
+
+        JTable borrowedBooksTable = new JTable(tableModel);
+        borrowedBooksTable.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        borrowedBooksTable.setRowHeight(25);
+        borrowedBooksTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 18));
+        borrowedBooksTable.getTableHeader().setBackground(new Color(0x4B2E2E));
+        borrowedBooksTable.getTableHeader().setForeground(Color.WHITE);
+
+        JScrollPane scrollPane = new JScrollPane(borrowedBooksTable);
+        scrollPane.setPreferredSize(new Dimension(750, 250));
+        scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JPanel tablePanel = new JPanel();
+        tablePanel.setOpaque(false);
+        tablePanel.setLayout(new BorderLayout());
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
+        backgroundPanel.add(tablePanel, BorderLayout.CENTER);
 
         // Return button
         JButton returnButton = new JButton("Return Book");
-        returnButton.setFont(new Font("SansSerif", Font.BOLD, 23));
+        returnButton.setFont(new Font("SansSerif", Font.BOLD, 20));
         returnButton.setBackground(new Color(0x603F26));
         returnButton.setForeground(Color.WHITE);
         returnButton.setAlignmentX(CENTER_ALIGNMENT);
-        returnButton.setPreferredSize(new Dimension(250, 50));
-        returnButton.setMaximumSize(new Dimension(250, 50));
-        returnButton.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        returnButton.setFocusPainted(false);
-        backgroundPanel.add(Box.createVerticalStrut(20));
-        backgroundPanel.add(returnButton);
-        returnButton.addActionListener(e -> returnSelectedBook());
+        returnButton.setToolTipText("Click to return the selected book");
+        returnButton.addActionListener(e -> returnSelectedBook(borrowedBooksTable, tableModel));
 
         // Back button
         JButton backButton = new JButton("Back");
-        backButton.setFont(new Font("SansSerif", Font.BOLD, 18));
+        backButton.setFont(new Font("SansSerif", Font.BOLD, 20));
         backButton.setBackground(new Color(0x603F26));
         backButton.setForeground(Color.WHITE);
         backButton.setPreferredSize(new Dimension(100, 40));
-        backButton.setMaximumSize(new Dimension(100, 40));
-        backButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        backButton.setFocusPainted(false);
         backButton.addActionListener(e -> {
             dispose();
             parentFrame.setVisible(true);
         });
 
-        // Create horizontal box for back button
-        Box horizontalBox = Box.createHorizontalBox();
-        horizontalBox.add(Box.createHorizontalGlue());
-        horizontalBox.add(Box.createRigidArea(new Dimension(10, 0)));
-        horizontalBox.add(backButton);
-        horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
-
-        backgroundPanel.add(Box.createVerticalStrut(-50));
-        backgroundPanel.add(horizontalBox);
-        backgroundPanel.add(Box.createVerticalStrut(20));
-
-      
+        // Bottom panel for buttons
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.setOpaque(false);
+        bottomPanel.add(returnButton);
+        bottomPanel.add(backButton);
+        backgroundPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         // Frame settings
         add(backgroundPanel);
-        setSize(720, 620);
+        setSize(800, 650);
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
-    private void loadBorrowedBooks() {
+    private void loadBorrowedBooks(DefaultTableModel tableModel) {
         List<Book> allBooks = Createbook.getAllBooks();
         for (Book book : allBooks) {
-            if (!book.isAvailable()) {
-                // Check if this book is borrowed by this student
-                if (isBookBorrowedByStudent(book.getIsbn())) {
-                    borrowedBooksModel.addElement(book);
-                }
+            if (!book.isAvailable() && isBookBorrowedByStudent(book.getIsbn())) {
+                tableModel.addRow(new Object[]{book.getIsbn(), book.getTitle(), book.getAuthor()});
             }
         }
     }
@@ -130,7 +121,9 @@ public class ReturnBooks extends JFrame {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts[0].equals(isbn) && parts[2].equals(studentId) && parts[5].equals("Borrowed")) {
+                if (parts[0].equals(isbn) && 
+                    parts[2].equals(studentId) && 
+                    parts[4].equals("Borrowed")) {
                     return true;
                 }
             }
@@ -140,39 +133,54 @@ public class ReturnBooks extends JFrame {
         return false;
     }
 
-    private void returnSelectedBook() {
-        Book selectedBook = borrowedBooksList.getSelectedValue();
-        if (selectedBook == null) {
+    private void returnSelectedBook(JTable borrowedBooksTable, DefaultTableModel tableModel) {
+        int selectedRow = borrowedBooksTable.getSelectedRow();
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Please select a book to return");
             return;
         }
 
-        // Update borrowing record
-        updateBorrowingRecord(selectedBook.getIsbn());
+        String isbn = (String) tableModel.getValueAt(selectedRow, 0);  // Cast to String explicitly
 
-        // Update book status
-        Createbook.updateBookStatus(selectedBook.getIsbn(), true);
-        borrowedBooksModel.removeElement(selectedBook);
-
-        JOptionPane.showMessageDialog(this, "Book returned successfully!");
+        try {
+            // Update borrowing record first
+            if (updateBorrowingRecord(isbn)) {
+                // Only update book status and remove row if borrowing record was updated successfully
+                Createbook.updateBookStatus(isbn, true);
+                tableModel.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(this, "Book returned successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error returning book. Please try again.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error returning book: " + e.getMessage());
+        }
     }
 
-    private void updateBorrowingRecord(String isbn) {
+    private boolean updateBorrowingRecord(String isbn) {
         List<String> records = new ArrayList<>();
+        boolean recordFound = false;
+        
         try (BufferedReader reader = new BufferedReader(new FileReader(BORROWING_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts[0].equals(isbn) && parts[2].equals(studentId) && parts[5].equals("Borrowed")) {
-                    BorrowingRecord record = new BorrowingRecord(parts[0], parts[1], parts[2]);
-                    record.returnBook();
-                    records.add(record.toString());
+                if (parts[0].equals(isbn) && parts[2].equals(studentId) && parts[4].equals("Borrowed")) {
+                    // Create new record with "Returned" status
+                    records.add(parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ",Returned");
+                    recordFound = true;
                 } else {
                     records.add(line);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
+        }
+
+        if (!recordFound) {
+            return false;
         }
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BORROWING_FILE))) {
@@ -180,8 +188,10 @@ public class ReturnBooks extends JFrame {
                 writer.write(record);
                 writer.newLine();
             }
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
     }
 } 

@@ -1,20 +1,49 @@
-1,Ulala,Author One,available
-2,The Tale of Kenji Sindikato,Kenji Chua,available,
-3,Tula ni Ginoong Torpe,Gillan Lorenzo,available
-4,The Great Gatsby,F. Scott Fitzgerald,available,
-5,1984,George Orwell,available,
-6,To Kill a Mockingbird,Harper Lee,borrowed,456
-7,Pride and Prejudice,Jane Austen,available,
-8,Moby Dick,Herman Melville,available
-9,War and Peace,Leo Tolstoy,borrowed,789
-10,The Catcher in the Rye,J.D. Salinger,available,
-11,The Hobbit,J.R.R. Tolkien,available,
-12,The Alchemist,Paulo Coelho,borrowed,101
-13,The Picture of Dorian Gray,Oscar Wilde,available,
-14,Brave New World,Aldous Huxley,available,
-15,The Chronicles of Narnia,C.S. Lewis,borrowed,202
-16,The Fault in Our Stars,John Green,available,
-17,The Kite Runner,Khaled Hosseini,available,
-18,The Book Thief,Markus Zusak,available,
-19,The Catcher in the Rye,J.D. Salinger,available,
-20,The Great Gatsby,F. Scott Fitzgerald,available,
+20240001,Introduction to Algorithms,Thomas H. Cormen,available
+20240002,The Art of Computer Programming,Donald E. Knuth,available
+20240003,Computer Networking: A Top-Down Approach,James F. Kurose,available
+20240004,Design Patterns: Elements of Reusable Object-Oriented Software,Erich Gamma,available
+20240005,Clean Code: A Handbook of Agile Software Craftsmanship,Robert C. Martin,available
+20240006,Artificial Intelligence: A Modern Approach,Stuart Russell,available
+20240007,Computer Organization and Design,David A. Patterson,borrowed
+20240008,Introduction to the Theory of Computation,Michael Sipser,available
+20240009,Structure and Interpretation of Computer Programs,Harold Abelson,available
+20240010,Operating System Concepts,Abraham Silberschatz,available
+20240011,Head First Java,Kathy Sierra,available
+20240012,Cracking the Coding Interview,Gayle Laakmann McDowell,available
+20240013,The Pragmatic Programmer,Andrew Hunt,available
+20240014,Code: The Hidden Language of Computer Hardware and Software,Charles Petzold,available
+20240015,Database System Concepts,Abraham Silberschatz,borrowed
+20240016,Algorithms,Robert Sedgewick,borrowed
+20240017,Introduction to Database Systems,C.J. Date,available
+20240018,Deep Learning,Ian Goodfellow,available
+20240019,Compilers: Principles, Techniques,available
+20240020,Computer Graphics: Principles and Practice,John F. Hughes,available
+20240021,Network Security: Private Communication in a Public World,Charlie Kaufman,available
+20240022,Modern Operating Systems,Andrew S. Tanenbaum,available
+20240023,Programming Pearls,Jon Bentley,available
+20240024,High-Performance Browser Networking,Ilya Grigorik,available
+20240025,The Mythical Man-Month,Frederick P. Brooks Jr.,available
+20240026,The Elements of Computing Systems,Noam Nisan,available
+20240027,Understanding Machine Learning: From Theory to Algorithms,Shai Shalev-Shwartz,available
+20240028,Computer Security: Principles and Practice,William Stallings,available
+20240029,Automate the Boring Stuff with Python,Al Sweigart,available
+20240030,Python Crash Course,Eric Matthes,available
+20240031,JavaScript: The Good Parts,Douglas Crockford,available
+20240032,Learn You a Haskell for Great Good!,Miran Lipovača,available
+20240033,Practical Vim,Drew Neil,available
+20240034,Data Science from Scratch,Joel Grus,available
+20240035,Learning Python,Mark Lutz,available
+20240036,Eloquent JavaScript,Marijn Haverbeke,available
+20240037,C Programming Language,Brian W. Kernighan,available
+20240038,Effective Java,Joshua Bloch,available
+20240039,Think Python,Allen B. Downey,available
+20240040,Programming in Haskell,Graham Hutton,available
+20240041,The Go Programming Language,Alan A. A. Donovan,available
+20240042,Refactoring: Improving the Design of Existing Code,Martin Fowler,available
+20240043,You Don't Know JS,Kyle Simpson,available
+20240044,Groking Algorithms,Aditya Bhargava,available
+20240045,The Little Schemer,Daniel P. Friedman,available
+20240046,Practical Object-Oriented Design,Design, available
+20240047,Designing Data-Intensive Applications,Martin Kleppmann,available
+20240048,Soft Skills: The software developer’s life, John Sonmez,available
+20240049, Computer Networking - textbook by Kurose

@@ -12,7 +12,7 @@ public class DisplayBooks {
     private JFrame frame;
 
     public DisplayBooks(JFrame parentFrame, JFrame adminFrame) {
-        frame = new JFrame("All Books");
+        frame = new JFrame("Books List");
         frame.setIconImage(new ImageIcon("White and Blue Illustrative Class Logo-modified.png").getImage());
 
         JPanel contentPanel = new JPanel();
@@ -21,11 +21,11 @@ public class DisplayBooks {
         contentPanel.setBorder(BorderFactory.createTitledBorder("Book List"));
         frame.setContentPane(contentPanel);
 
-        JLabel titleLabel = new JLabel("All Available Books", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("All Books", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
         contentPanel.add(titleLabel, BorderLayout.NORTH);
 
-        DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"Book ID", "Book Title", "Book Authors"}, 0) {
+        DefaultTableModel tableModel = new DefaultTableModel(new Object[]{"Book ID", "Book Title", "Book Authors", "Status"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -93,8 +93,16 @@ public class DisplayBooks {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",");
-                if (details.length >= 3) {
-                    tableModel.addRow(new Object[]{details[0], details[1], details[2]});
+                if (details.length >= 4) {
+                    String status = details[3].trim();
+                    String displayStatus = status.equalsIgnoreCase("available") ? "Available" : "Borrowed";
+
+                    tableModel.addRow(new Object[]{
+                        details[0].trim(),
+                        details[1].trim(),
+                        details[2].trim(),
+                        displayStatus
+                    });
                 }
             }
         } catch (IOException e) {
