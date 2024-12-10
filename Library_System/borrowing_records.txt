@@ -1,15 +1,16 @@
-1,ulala,20230859-S,2024-11-27 14:18,2024-11-27 14:18,Returned
-1,ulala,20230859-S,2024-11-27 14:21,2024-11-27 14:21,Returned
-2,The tale of Kenji sindikato,20230859-S,2024-11-27 14:24,2024-11-27 14:24,Returned
-2,The tale of Kenji sindikato,20230859-S,2024-11-27 15:24,2024-11-27 15:24,Returned
-1,ulala,20230519-S,2024-11-27 15:25,2024-11-27 15:25,Returned
-2,The tale of Kenji sindikato,20230859-S,2024-11-27 16:34,2024-11-27 16:34,Returned
-1,ulala,20230859-S,2024-11-27 16:34,2024-11-27 16:34,Returned
-3,Tula ni Ginoong Torpe,1,2024-12-08 18:27,2024-12-08 18:27,Returned
-3,Tula ni Ginoong Torpe,2,2024-12-10 02:23,2024-12-10 02:23,Returned
-1,ulala,2,2024-12-10 02:22,2024-12-10 02:22,Returned
-2,The tale of Kenji sindikato,1,2024-12-08 18:32,2024-12-08 18:32,Returned
-2,The tale of Kenji sindikato,1,2024-12-09 23:58,2024-12-09 23:58,Returned
-19,The Catcher in the Rye,1,2024-12-10 01:45,-,Borrowed
-8,Moby Dick,1,2024-12-10 02:03,2024-12-10 02:03,Returned
-19,The Catcher in the Rye,1,2024-12-10 01:53,-,Borrowed
+20240010,Operating System Concepts,1,2024-12-10 23:43,2024-12-10 23:43,Returned
+20240012,Cracking the Coding Interview,1,2024-12-10 23:42,2024-12-10 23:42,Returned
+20240005,Clean Code: A Handbook of Agile Software Craftsmanship,1,2024-12-10 23:43,2024-12-10 23:43,Returned
+20240011,Head First Java,1,2024-12-10 23:42,2024-12-10 23:42,Returned
+20240002,The Art of Computer Programming,1,2024-12-10 23:43,2024-12-10 23:43,Returned
+20240013,The Pragmatic Programmer,1,2024-12-10 23:42,2024-12-10 23:42,Returned
+20240023,Programming Pearls,1,2024-12-10 23:42,2024-12-10 23:42,Returned
+20240009,Structure and Interpretation of Computer Programs,1,2024-12-10,Returned
+20240019,Compilers: Principles,1,2024-12-10,Returned
+20240016,Algorithms,1,2024-12-10,Returned
+20240017,Introduction to Database Systems,1,2024-12-10,Returned
+20240018,Deep Learning,1,2024-12-10,Returned
+20240022,Modern Operating Systems,1,2024-12-10,Returned
+20240007,Computer Organization and Design,1,2024-12-10,Borrowed,David A. Patterson
+20240015,Database System Concepts,1,2024-12-10,Borrowed,Abraham Silberschatz
+20240016,Algorithms,1,2024-12-10,Borrowed,Robert Sedgewick

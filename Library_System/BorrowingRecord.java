@@ -17,6 +17,14 @@ public class BorrowingRecord {
         this.status = "Borrowed";
     }
 
+    public BorrowingRecord(String isbn, String bookTitle, String studentId, String borrowDate, String status) {
+        this.isbn = isbn;
+        this.bookTitle = bookTitle;
+        this.studentId = studentId;
+        this.borrowDate = LocalDateTime.parse(borrowDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.status = status;
+    }
+
     public void returnBook() {
         this.returnDate = LocalDateTime.now();
         this.status = "Returned";
