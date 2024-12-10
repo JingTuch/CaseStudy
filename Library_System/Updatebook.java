@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -13,226 +15,226 @@ public class Updatebook {
         frame = new JFrame("Update Book");
         frame.setIconImage(new ImageIcon("White and Blue Illustrative Class Logo-modified.png").getImage());
 
-        JPanel panel = new JPanel();
+        // Main panel with background
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                ImageIcon background = new ImageIcon("bgpictttt.png");
+                g.drawImage(background.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(new Color(0xFFF0D1)); // Set background color
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        // Header
         JLabel headerLabel = new JLabel("Update Book Details");
         headerLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
         headerLabel.setForeground(new Color(0x3B3030));
-        headerLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        headerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0));
         panel.add(headerLabel);
 
-        // Book ID input
-        JLabel bookNumberLabel = new JLabel("Enter Book ID to Update");
-        bookNumberLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        bookNumberLabel.setFont(new Font("SansSerif", Font.BOLD, 16)); // Bold font
-        panel.add(bookNumberLabel);
+        // Input Panel
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(3, 2, 10, 10));
+        inputPanel.setOpaque(false);
+        inputPanel.setMaximumSize(new Dimension(400, 120));
 
+        // Input fields
         bookNumberField = new JTextField();
-        bookNumberField.setMaximumSize(new Dimension(300, 30)); // Set max size for text field
-        panel.add(bookNumberField);
-
-        JButton searchButton = new JButton("Search");
-        searchButton.setFont(new Font("SansSerif", Font.BOLD, 18));
-        searchButton.setBackground(new Color(0x603F26));
-        searchButton.setForeground(Color.WHITE);
-        searchButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        panel.add(searchButton);
-
-        // Book Title and Author fields
-        JLabel bookTitleLabel = new JLabel("Book Title");
-        bookTitleLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        bookTitleLabel.setFont(new Font("SansSerif", Font.BOLD, 16)); // Bold font
-        panel.add(bookTitleLabel);
         bookTitleField = new JTextField();
-        bookTitleField.setEditable(false);
-        bookTitleField.setMaximumSize(new Dimension(300, 30)); // Set max size for text field
-        panel.add(bookTitleField);
-
-        JLabel bookAuthorLabel = new JLabel("Book Author");
-        bookAuthorLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        bookAuthorLabel.setFont(new Font("SansSerif", Font.BOLD, 16)); // Bold font
-        panel.add(bookAuthorLabel);
         bookAuthorField = new JTextField();
-        bookAuthorField.setEditable(false);
-        bookAuthorField.setMaximumSize(new Dimension(300, 30)); // Set max size for text field
-        panel.add(bookAuthorField);
 
-        JButton updateButton = new JButton("Update");
-        updateButton.setFont(new Font("SansSerif", Font.BOLD, 20));
-        updateButton.setBackground(new Color(0x603F26));
-        updateButton.setForeground(Color.WHITE);
-        updateButton.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        updateButton.setEnabled(false);
-        panel.add(updateButton);
+        // Labels with consistent font
+        Font labelFont = new Font("SansSerif", Font.BOLD, 14);
+        JLabel numberLabel = new JLabel("Book ID:");
+        JLabel titleLabel = new JLabel("Book Title:");
+        JLabel authorLabel = new JLabel("Book Author:");
+        numberLabel.setFont(labelFont);
+        titleLabel.setFont(labelFont);
+        authorLabel.setFont(labelFont);
 
-        JButton backButton = new JButton("Back");
-        backButton.setFont(new Font("SansSerif", Font.BOLD, 18));
-        backButton.setBackground(new Color(0x603F26));
-        backButton.setForeground(Color.WHITE);
-        backButton.setPreferredSize(new Dimension(100, 40));
-        backButton.setMaximumSize(new Dimension(100, 40));
-        backButton.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        backButton.setFocusPainted(false);
+        inputPanel.add(numberLabel);
+        inputPanel.add(bookNumberField);
+        inputPanel.add(titleLabel);
+        inputPanel.add(bookTitleField);
+        inputPanel.add(authorLabel);
+        inputPanel.add(bookAuthorField);
 
-        backButton.addActionListener(e -> {
-            frame.dispose();
-            adminFrame.setVisible(true);
-        });
+        panel.add(inputPanel);
+        panel.add(Box.createVerticalStrut(20));
 
-        searchButton.addActionListener(e -> {
-            String bookNumber = bookNumberField.getText();
-            if (bookNumber.isEmpty()) {
-                JOptionPane.showMessageDialog(frame, "Please enter a book number.");
-                return;
-            }
-
-            String[] bookDetails = findBookDetails(bookNumber);
-            if (bookDetails == null) {
-                JOptionPane.showMessageDialog(frame, "Book not found!");
-            } else {
-                bookTitleField.setText(bookDetails[1]);
-                bookAuthorField.setText(bookDetails[2]);
-                bookTitleField.setEditable(true);
-                bookAuthorField.setEditable(true);
-                updateButton.setEnabled(true);
-            }
-        });
-
+        // Update Button
+        JButton updateButton = createStyledButton("Update", 200, 40);
         updateButton.addActionListener(e -> {
-            String bookNumber = bookNumberField.getText();
-            String bookTitle = bookTitleField.getText();
-            String bookAuthor = bookAuthorField.getText();
+            String bookNumber = bookNumberField.getText().trim();
+            String bookTitle = bookTitleField.getText().trim();
+            String bookAuthor = bookAuthorField.getText().trim();
 
-            if (bookTitle.isEmpty() || bookAuthor.isEmpty()) {
+            if (bookNumber.isEmpty() || bookTitle.isEmpty() || bookAuthor.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "All fields must be filled!");
                 return;
             }
 
             if (updateBookDetails(bookNumber, bookTitle, bookAuthor)) {
                 JOptionPane.showMessageDialog(frame, "Book updated successfully!");
+                updateBookTable();
+                clearFields();
             } else {
                 JOptionPane.showMessageDialog(frame, "Error updating book details.");
             }
+        });
+        panel.add(updateButton);
+        panel.add(Box.createVerticalStrut(20));
 
+        // Existing Books Label
+        JLabel existingBooksLabel = new JLabel("Existing Books:");
+        existingBooksLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        existingBooksLabel.setForeground(new Color(0x3B3030));
+        existingBooksLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(existingBooksLabel);
+        panel.add(Box.createVerticalStrut(10));
+
+        // Book Table
+        bookTable = new JTable();
+        setupBookTable();
+        
+        // Add table selection listener
+        bookTable.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int selectedRow = bookTable.getSelectedRow();
+                if (selectedRow != -1) {
+                    bookNumberField.setText(bookTable.getValueAt(selectedRow, 0).toString());
+                    bookTitleField.setText(bookTable.getValueAt(selectedRow, 1).toString());
+                    bookAuthorField.setText(bookTable.getValueAt(selectedRow, 2).toString());
+                }
+            }
+        });
+
+        JScrollPane scrollPane = new JScrollPane(bookTable);
+        scrollPane.setPreferredSize(new Dimension(580, 200));
+        scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, 200));
+        panel.add(scrollPane);
+        panel.add(Box.createVerticalStrut(20));
+
+        // Back Button
+        JButton backButton = createStyledButton("Back", 100, 40);
+        backButton.addActionListener(e -> {
             frame.dispose();
             adminFrame.setVisible(true);
         });
-
-        // Create a table to display all books
-        String[] columnNames = {"Book ID", "Book Title", "Book Authors", "Status"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
-        bookTable = new JTable(tableModel);
-        bookTable.setFillsViewportHeight(true);
-        bookTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        bookTable.setBackground(new Color(0xFFF0D1)); // Match background color
-        bookTable.setRowHeight(30); // Set row height for better visibility
-
-        // Center align the content
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        bookTable.setDefaultRenderer(Object.class, centerRenderer);
-
-        // Highlight header
-        bookTable.getTableHeader().setBackground(new Color(0x603F26));
-        bookTable.getTableHeader().setForeground(Color.WHITE);
-        bookTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
-
-        JScrollPane scrollPane = new JScrollPane(bookTable);
-        scrollPane.setPreferredSize(new Dimension(500, 200)); // Set preferred size for the table
-        panel.add(scrollPane);
-
-        // Load all books into the table
-        loadAllBooks(tableModel);
-
-        Box horizontalBox = Box.createHorizontalBox();
-        horizontalBox.add(Box.createHorizontalGlue());
-        horizontalBox.add(Box.createRigidArea(new Dimension(10, 0)));
-        horizontalBox.add(backButton);
-        horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
-
-        panel.add(horizontalBox);
+        panel.add(backButton);
 
         frame.add(panel);
-        frame.setSize(600, 600); // Increased height for better visibility
+        frame.setSize(600, 600);
         frame.setResizable(false);
         frame.setLocationRelativeTo(parentFrame);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
 
-    private String[] findBookDetails(String bookNumber) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] details = line.split(",", 4); // Adjusted to split into 4 parts
-                if (details[0].equals(bookNumber)) {
-                    return details;
-                }
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(frame, "Error reading file: " + e.getMessage());
-        }
-        return null;
+    private JButton createStyledButton(String text, int width, int height) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("SansSerif", Font.BOLD, 18));
+        button.setBackground(new Color(0x603F26));
+        button.setForeground(Color.WHITE);
+        button.setMaximumSize(new Dimension(width, height));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setFocusPainted(false);
+        return button;
+    }
+
+    private void clearFields() {
+        bookNumberField.setText("");
+        bookTitleField.setText("");
+        bookAuthorField.setText("");
     }
 
     private boolean updateBookDetails(String bookNumber, String bookTitle, String bookAuthor) {
-        File file = new File("books.txt");
-        File tempFile = new File("books_temp.txt");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(file));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-
+        List<String> lines = new ArrayList<>();
+        boolean found = false;
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
             String line;
-            boolean updated = false;
-
             while ((line = reader.readLine()) != null) {
-                String[] details = line.split(",", 4); // Adjusted to split into 4 parts
-                if (details[0].equals(bookNumber)) {
-                    String status = details[3].trim(); // Get the current status
-                    writer.write(bookNumber + "," + bookTitle + "," + bookAuthor + "," + status); // Include status
-                    updated = true;
+                String[] parts = line.split(",");
+                if (parts[0].equals(bookNumber)) {
+                    // Preserve the book's availability status
+                    lines.add(bookNumber + "," + bookTitle + "," + bookAuthor + "," + parts[3]);
+                    found = true;
                 } else {
-                    writer.write(line);
+                    lines.add(line);
                 }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        if (!found) {
+            JOptionPane.showMessageDialog(frame, "Book ID not found!");
+            return false;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("books.txt"))) {
+            for (String line : lines) {
+                writer.write(line);
                 writer.newLine();
             }
-            writer.flush(); 
-
-            if (updated) {
-                try (BufferedReader tempReader = new BufferedReader(new FileReader(tempFile));
-                     BufferedWriter originalWriter = new BufferedWriter(new FileWriter(file))) {
-                     
-                    while ((line = tempReader.readLine()) != null) {
-                        originalWriter.write(line);
-                        originalWriter.newLine();
-                    }
-                }
-            }
-
-            return updated;
-
+            return true;
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(frame, "Error updating file: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
 
-    private void loadAllBooks(DefaultTableModel tableModel) {
+    private void setupBookTable() {
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[]{"Book ID", "Title", "Author", "Status"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        bookTable.setModel(model);
+        
+        // Style the table
+        bookTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        bookTable.setRowHeight(25);
+        bookTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
+        bookTable.getTableHeader().setBackground(new Color(0x603F26));
+        bookTable.getTableHeader().setForeground(Color.WHITE);
+
+        // Center align all columns
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < bookTable.getColumnCount(); i++) {
+            bookTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        updateBookTable();
+    }
+
+    private void updateBookTable() {
+        DefaultTableModel model = (DefaultTableModel) bookTable.getModel();
+        model.setRowCount(0);
+        
         try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] details = line.split(",", 4); // Adjusted to split into 4 parts
-                if (details.length >= 4) { // Ensure there are enough details
-                    String status = details[3].trim(); // Get the status
-                    String displayStatus = status.equalsIgnoreCase("available") ? "Available" : "Borrowed"; // Normalize status
-                    tableModel.addRow(new Object[]{details[0], details[1], details[2], displayStatus}); // Include normalized status
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    model.addRow(new Object[]{
+                        parts[0],  // ISBN
+                        parts[1],  // Title
+                        parts[2],  // Author
+                        parts[3]   // Status
+                    });
                 }
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(frame, "Error reading file: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

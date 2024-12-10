@@ -47,3 +47,4 @@
 20240047,Designing Data-Intensive Applications,Martin Kleppmann,available
 20240048,Soft Skills: The software developer’s life, John Sonmez,available
 20240049, Computer Networking - textbook by Kurose
+1,nigga,ishowsped,available
