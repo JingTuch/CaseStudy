@@ -187,6 +187,17 @@ public class JSwing extends JFrame {
         mainmenuFrame.setLocationRelativeTo(null);
         mainmenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainmenuFrame.setVisible(true);
+
+        aboutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              mainmenuFrame.dispose(); 
+              HowtoUse how = new HowtoUse();
+              how.setVisible(true);
+              
+            }
+        });
+    
     }
 
     //ADMIN MENU
