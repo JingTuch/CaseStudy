@@ -99,16 +99,28 @@ public class BorrowingHistory extends JFrame {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts[2].equals(studentId)) {
+                // Check if the record belongs to the current student
+                if (parts.length >= 5 && parts[2].equals(studentId)) {
+                    String title = parts[1];
+                    String borrowDate = parts[3];
+                    String status = parts[4];
+                    // Handle return date based on status
+                    String returnDate = status.equals("Borrowed") ? "Not returned yet" : 
+                                      (parts.length > 5 ? parts[4] : "N/A");
+                    
                     model.addRow(new Object[]{
-                        parts[1],  // Book Title
-                        parts[3],  // Borrow Date
-                        parts[4],  // Return Date
-                        parts[5]   // Status
+                        title,          // Book Title
+                        borrowDate,     // Borrow Date
+                        returnDate,     // Return Date
+                        status         // Status
                     });
                 }
             }
         } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error loading borrowing history: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
