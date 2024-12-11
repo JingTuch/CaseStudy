@@ -31,6 +31,7 @@ public class Createbook {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         // Set an empty border on the main panel to create margins
+        
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JLabel headerLabel = new JLabel("Create New Book");
@@ -132,10 +133,10 @@ public class Createbook {
         backButton.setMaximumSize(new Dimension(100, 40));
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        backButton.addActionListener(e -> {
+        backButton.addActionListener(e -> { 
             frame.dispose();
             adminFrame.setVisible(true);
-            updateBookList();
+           
         });
 
         panel.add(backButton);
@@ -178,6 +179,7 @@ public class Createbook {
     }
 
     private static void loadBooksFromFile() {
+        books.clear(); 
         try (BufferedReader reader = new BufferedReader(new FileReader(BOOKS_FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
