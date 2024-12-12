@@ -37,18 +37,18 @@ public class BorrowBooks extends JFrame {
         titleLabel.setForeground(new Color(0x3B3030));
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
 
-        // Logo label
-        JLabel logoLabel = new JLabel(new ImageIcon("logo.png")); // Ensure "logo.png" is the correct path
+        
+        JLabel logoLabel = new JLabel(new ImageIcon("logo.png")); 
         logoLabel.setAlignmentX(CENTER_ALIGNMENT);
 
-        // Title label with improved alignment
+        
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
-        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS)); // Use BoxLayout for vertical alignment
-        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0)); // Add padding to the top
-        titlePanel.add(logoLabel); // Add logo first
-        titlePanel.add(Box.createVerticalStrut(10)); // Add some space between logo and title
-        titlePanel.add(titleLabel); // Add title next
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS)); 
+        titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 10, 0)); 
+        titlePanel.add(logoLabel); 
+        titlePanel.add(Box.createVerticalStrut(10)); 
+        titlePanel.add(titleLabel);
         backgroundPanel.add(titlePanel, BorderLayout.NORTH);
 
         // Table Model and JTable
@@ -64,17 +64,17 @@ public class BorrowBooks extends JFrame {
         bookTable.getTableHeader().setForeground(Color.WHITE);
 
         JScrollPane scrollPane = new JScrollPane(bookTable);
-        scrollPane.setPreferredSize(new Dimension(750, 250)); // Adjusted size for more top space
+        scrollPane.setPreferredSize(new Dimension(750, 250)); 
 
-        // Add margin around the scroll pane
+       
         JPanel tablePanel = new JPanel();
         tablePanel.setOpaque(false);
-        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add margin
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); 
         tablePanel.setLayout(new BorderLayout());
         tablePanel.add(scrollPane, BorderLayout.CENTER);
         backgroundPanel.add(tablePanel, BorderLayout.CENTER);
 
-        // Customize Table (column sizes and alignment)
+      
         customizeTable();
 
         // Borrow Button
@@ -113,6 +113,11 @@ public class BorrowBooks extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
+
+
+
+ // -----------------[ BACK END ]-----------------
+
 
     private void loadAvailableBooks() {
         List<Book> books = Createbook.getAllBooks();
@@ -155,7 +160,7 @@ public class BorrowBooks extends JFrame {
 
         // Save record to file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(BORROWING_FILE, true))) {
-            // Format: ISBN,Title,StudentID,BorrowDate,Status,Author
+            
             String record = String.format("%s,%s,%s,%s,%s,%s",
                 isbn,
                 title,
@@ -183,6 +188,8 @@ public class BorrowBooks extends JFrame {
             dueDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
     }
 
+
+    
     private boolean hasOverdueBooks() {
         try (BufferedReader reader = new BufferedReader(new FileReader(BORROWING_FILE))) {
             String line;
@@ -226,13 +233,13 @@ public class BorrowBooks extends JFrame {
     }
 
     private void customizeTable() {
-        // Modify column sizes
+      
         TableColumnModel columnModel = bookTable.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(150); // ISBN
         columnModel.getColumn(1).setPreferredWidth(300); // Title
         columnModel.getColumn(2).setPreferredWidth(150); // Author
 
-        // Center align text in columns
+      
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < columnModel.getColumnCount(); i++) {

@@ -86,6 +86,8 @@ public class StudentLogin extends JFrame {
         setVisible(true);
     }
 
+    // -----------------[ BACK END ]-----------------
+
     private void handleLogin(JFrame parentFrame) {
         String studentNumber = numberField.getText().trim();
         String password = new String(passwordField.getPassword()).trim();

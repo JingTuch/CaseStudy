@@ -112,6 +112,8 @@ public class UpdateStudent extends JFrame {
         setVisible(true);
     }
 
+    // -----------------[ BACK END ]-----------------
+
     private Student findStudentByNumber(String studentNumber, List<Student> students) {
         for (Student student : students) {
             if (student.getStudentNumber().equals(studentNumber)) {

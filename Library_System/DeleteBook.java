@@ -1,7 +1,7 @@
-import javax.swing.*;
-import javax.swing.table.*;
 import java.awt.*;
 import java.io.*;
+import javax.swing.*;
+import javax.swing.table.*;
 
 public class DeleteBook {
     private JFrame frame;
@@ -132,14 +132,14 @@ public class DeleteBook {
         };
         bookTable.setModel(model);
         
-        // Style the table
+       
         bookTable.setFont(new Font("SansSerif", Font.PLAIN, 14));
         bookTable.setRowHeight(25);
         bookTable.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
         bookTable.getTableHeader().setBackground(new Color(0x603F26));
         bookTable.getTableHeader().setForeground(Color.WHITE);
 
-        // Center align all columns
+        
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < bookTable.getColumnCount(); i++) {
@@ -148,6 +148,10 @@ public class DeleteBook {
 
         updateBookTable();
     }
+
+    
+// -----------------[ BACK END ]-----------------
+
 
     private void updateBookTable() {
         DefaultTableModel model = (DefaultTableModel) bookTable.getModel();

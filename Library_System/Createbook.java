@@ -104,24 +104,24 @@ public class Createbook {
         bookTable = new JTable();
         setupBookTable(bookTable);
 
-        // Create a panel for the label to center it
+       
         JPanel labelPanel = new JPanel();
-        labelPanel.setLayout(new FlowLayout(FlowLayout.CENTER)); // Center the label
-        labelPanel.setOpaque(false); // Make the panel transparent to show the background
+        labelPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        labelPanel.setOpaque(false); 
         JLabel existingBooksLabel = new JLabel("Existing Books:");
-        existingBooksLabel.setFont(new Font("Tahoma", Font.BOLD, 16)); // Set a bold font for the label
-        existingBooksLabel.setForeground(new Color(0x3B3030)); // Set the text color
-        labelPanel.add(existingBooksLabel); // Add the label to the panel
+        existingBooksLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+        existingBooksLabel.setForeground(new Color(0x3B3030)); 
+        labelPanel.add(existingBooksLabel); 
 
-        // Update the JScrollPane size to match the gray background area without margins
+       
         JScrollPane scrollPane = new JScrollPane(bookTable);
-        scrollPane.setPreferredSize(new Dimension(580, 400)); // Set preferred size to match the panel size
-        scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE)); // Allow it to expand
-        scrollPane.setBorder(null); // Remove margins around the scroll pane
+        scrollPane.setPreferredSize(new Dimension(580, 400)); 
+        scrollPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        scrollPane.setBorder(null); 
 
-        // Add the label panel and scroll pane to the main panel
-        panel.add(labelPanel); // Add the centered label panel
-        panel.add(scrollPane); // Add the scroll pane
+       
+        panel.add(labelPanel);
+        panel.add(scrollPane); 
         panel.add(Box.createVerticalStrut(20));
 
 
@@ -148,6 +148,9 @@ public class Createbook {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
+
+
+    //-----------------[ BACK END ]-----------------
 
     private void saveBookDetails(String bookNumber, String bookTitle, String bookAuthor) {
         if (!bookNumber.matches("\\d+")) {
