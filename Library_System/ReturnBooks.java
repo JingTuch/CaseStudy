@@ -107,6 +107,9 @@ public class ReturnBooks extends JFrame {
         setVisible(true);
     }
 
+// -----------------[ BACK END ]-----------------
+
+
     private void loadBorrowedBooks(DefaultTableModel tableModel) {
         List<Book> allBooks = Createbook.getAllBooks();
         for (Book book : allBooks) {
@@ -140,12 +143,11 @@ public class ReturnBooks extends JFrame {
             return;
         }
 
-        String isbn = (String) tableModel.getValueAt(selectedRow, 0);  // Cast to String explicitly
-
+        String isbn = (String) tableModel.getValueAt(selectedRow, 0); 
         try {
-            // Update borrowing record first
+           
             if (updateBorrowingRecord(isbn)) {
-                // Only update book status and remove row if borrowing record was updated successfully
+               
                 Createbook.updateBookStatus(isbn, true);
                 tableModel.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(this, "Book returned successfully!");
@@ -167,7 +169,7 @@ public class ReturnBooks extends JFrame {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts[0].equals(isbn) && parts[2].equals(studentId) && parts[4].equals("Borrowed")) {
-                    // Create new record with "Returned" status
+                  
                     records.add(parts[0] + "," + parts[1] + "," + parts[2] + "," + parts[3] + ",Returned");
                     recordFound = true;
                 } else {

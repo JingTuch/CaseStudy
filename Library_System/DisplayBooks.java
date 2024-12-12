@@ -89,6 +89,8 @@ public class DisplayBooks {
         frame.setVisible(true);
     }
 
+// -----------------[ BACK END ]-----------------
+
     private void loadBookDetails(DefaultTableModel tableModel) {
         try (BufferedReader reader = new BufferedReader(new FileReader("books.txt"))) {
             String line;

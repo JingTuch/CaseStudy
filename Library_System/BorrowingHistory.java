@@ -94,6 +94,10 @@ public class BorrowingHistory extends JFrame {
         setVisible(true);
     }
 
+
+   // -----------------[ BACK END ]-----------------
+
+
     private void loadHistoryData(DefaultTableModel model) {
         try (BufferedReader reader = new BufferedReader(new FileReader(BORROWING_FILE))) {
             String line;
@@ -109,10 +113,10 @@ public class BorrowingHistory extends JFrame {
                                       (parts.length > 5 ? parts[4] : "N/A");
                     
                     model.addRow(new Object[]{
-                        title,          // Book Title
-                        borrowDate,     // Borrow Date
-                        returnDate,     // Return Date
-                        status         // Status
+                        title,         
+                        borrowDate,    
+                        returnDate,    
+                        status         
                     });
                 }
             }
